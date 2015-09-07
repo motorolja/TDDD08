@@ -1,2 +1,2 @@
 # TDDD08
-Logicprogramming Labs
+Logic Programming Labs
