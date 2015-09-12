@@ -42,5 +42,4 @@ path(X,Y):- edge(X,Y).
 path(X,Y):- edge(X,Z), path(Z,Y). 
 path(X,Y,[X,Y]):- edge(X,Y).
 path(X,Y,[X,Z|XS]):- edge(X,Z), path(Z,Y,XS).
-%npath(X,Y,[Len,X,Y]):-  Len is 2-1,edge(X,Y).
-npath(X,Y,[Len,[X,LS|XS]]):- path(X,Y,XS),length(XS,Len).
+npath(X,Y,[Length|XS]):- path(X,Y,XS),length(XS,Len),Length is Len/2.
