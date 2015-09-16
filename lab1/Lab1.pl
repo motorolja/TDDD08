@@ -1,4 +1,3 @@
-% Written by Henrik Phung (henph669).
 
 male(nisse).
 male(peter).
@@ -18,10 +17,10 @@ strong(bosse).
 kind(bosse).
 
 like(X,Y):- male(X), female(Y),	beautiful(Y).
-like(X,Y):- =(nisse,X), female(Y), like(Y,X).
+like(nisse,Y):- female(Y), like(Y,nisse).
 
-like(X,Y):- =(ulrika,X), male(Y), rich(Y), kind(Y), like(Y,X).
-like(X,Y):- =(ulrika,X), male(Y), beautiful(Y), strong(Y), like(Y,X).
+like(ulrika,Y):- male(Y), rich(Y), kind(Y), like(Y,ulrika).
+like(ulrika,Y):- male(Y), beautiful(Y), strong(Y), like(Y,ulrika).
 
 happy(X):- rich(X).
 happy(X):- male(X), female(Y), like(X,Y), like(Y,X).
@@ -40,6 +39,6 @@ edge(d,f).
 
 path(X,Y):- edge(X,Y).
 path(X,Y):- edge(X,Z), path(Z,Y). 
-path(X,Y,[X,Y]):- edge(X,Y).
-path(X,Y,[X,Z|XS]):- edge(X,Z), path(Z,Y,XS).
-npath(X,Y,[Length|XS]):- path(X,Y,XS),length(XS,Len),Length is Len/2.
+path(X,Y,[[X,Y]]):- edge(X,Y).
+path(X,Y,[[X,Z]|XS]):- edge(X,Z), path(Z,Y,XS).
+npath(X,Y,[Len|[XS]]):- path(X,Y,XS),length(XS,Len).
