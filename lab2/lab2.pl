@@ -13,7 +13,10 @@
 
 % qsort(X,[]):- 2.
 
-isort([Head|Tail],Sorted):- insert_element(Head,Tail,Sorted).
+%isort([Head|Tail],Sorted):- insert_element(Head,Tail,Sorted).
+
+isort([],[]).
+isort([Head|Tail],Sorted):- isort(Tail,SortedTail),insert_element(Head,SortedTail,Sorted).
 
 insert_element(X,[Y|Tail],[Y|NotTail]):- X>Y, insert_element(X,Tail,NotTail).
 insert_element(X,[Y|Tail],[X,Y|Tail]):- X=<Y.
