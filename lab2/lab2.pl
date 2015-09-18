@@ -28,5 +28,41 @@ append(Middle, [_Last], Xs),
 middle(X, Middle).
 
 
+/* 2.3 */
+
+id(a):- a is 1.
+id(b):- b is 2.
+id(c):- c is 3.
+id(d):- d is 4.
+id(e):- e is 5.
+id(f):- f is 6.
+skip().
+
+num(1).
+num(2).
+num(3).
+num(4).
+num(5).
+num(6).
+
+set(I,E):- I is E.
+
+seq(Command1,Command2):- Command1, Command2.
+
+if(LH,>,RH):- (LH>RH).
+if(LH,<,RH):- (LH<RH).
+if(LH,>=,RH):- (LH>=RH).
+if(LH,>=,RH):- LH>=RH.
+if(LH,==,RH):- =(LH,RH).
+
+while(IsTrue,Do):- IsTrue, Do, while(IsTrue,Do).
+
+execute(X,Y,_Result):- seq(set(id(Y),num(1)),
+while(id(X) > num(1),
+seq(set(id(Y), id(Y) * id(X)),
+set(id(X), id(X) - num(1))))).
 
 
+/* 2.4 */
+union(SetA,SetB,Result):- append(SetA,SetB,Sorted), sort(Sorted,Result).
+powerset(Set,Result):- sort(Set,Sorted),setof(X, subseq0(Sorted,X), Result).
