@@ -30,38 +30,22 @@ middle(X, Middle).
 
 /* 2.3 */
 
-id(a):- a is 1.
-id(b):- b is 2.
-id(c):- c is 3.
-id(d):- d is 4.
-id(e):- e is 5.
-id(f):- f is 6.
-skip().
-
-num(1).
-num(2).
-num(3).
-num(4).
-num(5).
-num(6).
-
-set(I,E):- I is E.
-
-seq(Command1,Command2):- Command1, Command2.
-
-if(LH,>,RH):- (LH>RH).
-if(LH,<,RH):- (LH<RH).
-if(LH,>=,RH):- (LH>=RH).
-if(LH,>=,RH):- LH>=RH.
-if(LH,==,RH):- =(LH,RH).
-
 while(IsTrue,Do):- IsTrue, Do, while(IsTrue,Do).
 
-execute(X,Y,_Result):- seq(set(id(Y),num(1)),
-while(id(X) > num(1),
-seq(set(id(Y), id(Y) * id(X)),
-set(id(X), id(X) - num(1))))).
+execute(X,skip,X).
+%execute(X,id(I),Out):- member([I|T],X), Out is T.
+%execute(X,num(N),Out):- member([H|N],X), Out is H.
+execute(X,seq(C,C),Y).
+execute(X,if(B,id(C1),id(C2)),Y):- Z is (C1>C2), B = Z.
+execute(X,while(B,C),Y).
+execute(X,set(id(I),E),Y):- nonmember([I,E],X), append(X,[[I,E]],Y).
 
+id(I).
+num(N).
+eval(A+B,CV):- eval(A,AV), eval(B,BV), CV is AV+BV.
+eval(A-B,CV):- eval(A,AV), eval(B,BV), CV is AV-BV.
+eval(A*B,CV):- eval(A,AV), eval(B,BV), CV is AV*BV.
+eval(Num,Num):-num(Num).
 
 /* 2.4 */
 union(SetA,SetB,Result):- append(SetA,SetB,Sorted), sort(Sorted,Result).
