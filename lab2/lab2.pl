@@ -32,20 +32,25 @@ middle(X, Middle).
 
 while(IsTrue,Do):- IsTrue, Do, while(IsTrue,Do).
 
+id(I).
+num(N).
+
 execute(X,skip,X).
-%execute(X,id(I),Out):- member([I|T],X), Out is T.
-%execute(X,num(N),Out):- member([H|N],X), Out is H.
 execute(X,seq(C,C),Y).
 execute(X,if(B,id(C1),id(C2)),Y):- Z is (C1>C2), B = Z.
 execute(X,while(B,C),Y).
-execute(X,set(id(I),E),Y):- nonmember([I,E],X), append(X,[[I,E]],Y).
+execute(X,set(id(I),E),Y):- eval(X,E,Sum), update(X,I,Sum,Y).
 
-id(I).
-num(N).
-eval(A+B,CV):- eval(A,AV), eval(B,BV), CV is AV+BV.
-eval(A-B,CV):- eval(A,AV), eval(B,BV), CV is AV-BV.
-eval(A*B,CV):- eval(A,AV), eval(B,BV), CV is AV*BV.
-eval(Num,Num):-num(Num).
+eval(X,id(I),CV):- member([I,CV],X).
+eval(X,A+B,CV):- eval(X,A,AV), eval(X,B,BV), CV is AV+BV.
+eval(X,A-B,CV):- eval(X,A,AV), eval(X,B,BV), CV is AV-BV.
+eval(X,A*B,CV):- eval(X,A,AV), eval(X,B,BV), CV is AV*BV.
+eval(X,num(A),A).
+
+update([[H1,H2]|_Tail],Identifier,Replacement,Result):- update(_Tail,Identifier,Replacement,Temp),
+	append([[H1,H2]], Temp, Result).
+
+update([[Identifier,H2]|_Tail],Identifier,Replacement,Result):- append([[Identifier,Replacement]], _Tail, Result).
 
 /* 2.4 */
 union(SetA,SetB,Result):- append(SetA,SetB,Sorted), sort(Sorted,Result).
