@@ -1,0 +1,82 @@
+% Lab 2 
+% execute( S0,P,Sn ) is true if Sn is the result of evaluating P with respect to S0
+
+execute(S0,Skip,S0)
+
+% identifier, expresion
+execute(S0,Set( id(X),E),Sn):-
+                eval_exp(S0,E,V),
+                update_value(S0,X,V,Sn).
+
+% Lecture notes
+<expr>::<atom>+<exrp>
+        | <atom>-<expr>
+        | <atom>
+
+<atom>::= N(N is a number)
+
+Example:
+expr([1,+,3,-,4]) should hold.
+
+expr(Xs):- atom(Xs).
+atom([X]):-number(X).
+expr(Xs):- append(A,B,Xs),
+           atom(A),
+           B=[+|C],
+           expr(C).
+
+Example:
+xs=[a,b,c|X],
+
+expr(Xs,X):- atom(Xs,Ys),
+             Ys=[+|Zs],
+             expr(Zs,X).
+
+expr(Xs,X):- atom(Xs,X).
+atom([X|Xs],Xs):- number(X).
+
+%%%%%%%%%%%%%%%%%
+expr--> atom,[+],expr.
+expr-->atom.
+atom-->[X],{number(X)}.
+
+%%%%%%%%%%%%%%%%%
+% Lab 3
+
+<exp>::=Skip|if<b-exp><exp>
+  | <id>:=<num>.
+
+<b-exp>::=<id>< <id>| <id>=<id>.
+<id>::= id(X), X is an atom.
+<num>::= Val(X), X is a number.
+
+exp--> [Skip].
+exp-->[ie],b-exp,exp.
+exp-->id,[C],id.
+exp-->id,[=],id.
+id-->[id(X)],{atom(X)}.
+num-->[Val(N)],{number(N)}.
+
+%%%%%%%%%%%%%%%%%%
+% problem with list with (()())
+Paren-->[].
+Paren-->['('],Paren,[')'].
+Paren-->Paren,Paren. % not working in prolog since infinite recursion
+
+% Solution
+Paren-->['('],Parens,[')'].
+Parens-->[].
+Parens-->Paren, Parens.
+
+%%%%%%%%%%%%%%%%%%
+edge(a,b).
+edge(b,a).
+edge(a,c).
+
+% bad solution
+path(X,Y):- edge(X,Y).
+path(X,Z):- edge(X,Y), path(Y,Z).
+
+% good solution
+path(X,Y,Path):- edge(X,Z), nonmember(Z,Path), path(Z,Y,[Z|Path]).
+path(X,Y,_):- edge(X,Y).
