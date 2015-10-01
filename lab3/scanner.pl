@@ -1,3 +1,45 @@
+/* Lab3 - Execise 3.1 */
+
+run(In, String, Out) :-
+	scan(String, Tokens),
+	parse(Tokens, AbstStx),
+	execute(In, AbstStx, Out).
+
+% parse(Tokens, Abstract):- .
+
+commands(cmd) --> (). 
+
+parse([id(X)|Tail], Abstract):- 
+
+/* Execise 2.3 */
+
+id(I).
+num(N):- number(N).
+
+execute(X,skip,X).
+execute(X,seq(C1,C2),Y):- execute(X,C1,Res1), execute(Res1,C2,Y).
+execute(X,if(B,C1,C2),Y):- (bool_eval(X,B) -> execute(X,C1,Y); execute(X,C2,Y)).
+execute(X,while(B,C),Y):- (bool_eval(X,B) -> execute(X,C,Out), execute(Out,while(B,C),Y); Y=X).
+execute(X,set(id(I),E),Y):- eval(X,E,Sum), update(X,I,Sum,Y).
+
+bool_eval(X,A<B):- eval(X,A,LH), eval(X,B,RH), LH<RH.
+bool_eval(X,(A=<B)):- eval(X,A,LH), eval(X,B,RH), LH=<RH.
+bool_eval(X,A>B):- eval(X,A,LH), eval(X,B,RH), LH>RH.
+bool_eval(X,(A>=B)):- eval(X,A,LH), eval(X,B,RH), LH>=RH.
+
+eval(X,id(I),CV):- member([I,CV],X).
+eval(X,A+B,CV):- eval(X,A,AV), eval(X,B,BV), CV is AV+BV.
+eval(X,A-B,CV):- eval(X,A,AV), eval(X,B,BV), CV is AV-BV.
+eval(X,A*B,CV):- eval(X,A,AV), eval(X,B,BV), CV is AV*BV.
+eval(X,A,A):-num(A).
+
+update([[H1,H2]|_Tail],Identifier,Replacement,Result):- update(_Tail,Identifier,Replacement,Temp),
+	append([[H1,H2]], Temp, Result).
+
+update([[Identifier,H2]|_Tail],Identifier,Replacement,Result):- append([[Identifier,Replacement]], _Tail, Result).
+
+
+
 % Scanner for assignment 3
 % TDDD08 Logic Programming
 %
