@@ -7,10 +7,24 @@ run(In, String, Out) :-
 
 % parse(Tokens, Abstract):- .
 
-commands(cmd) --> (). 
+% Lecture notes lab3
+parse([H|Tail],Abstract):- parse(Tail,XS), expression(H,Res), append(Res,XS,Abstract).
 
-parse([id(X)|Tail], Abstract):- 
+expression().
 
+<b-exp>::=<id><<id> | <id>=<id>.
+<id>::= id(X), X is an atom.
+<num>::= Val(X), X is a number.
+
+exp--> [Skip].
+exp-->[id],b-exp,exp.
+exp-->id,[C],id.
+exp-->id,[=],id.
+id-->[id(X)],{atom(X)}.
+num-->[Val(N)],{number(N)}.
+
+
+	
 /* Execise 2.3 */
 
 id(I).
