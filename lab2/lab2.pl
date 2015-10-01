@@ -43,6 +43,7 @@ bool_eval(X,A<B):- eval(X,A,LH), eval(X,B,RH), LH<RH.
 bool_eval(X,(A=<B)):- eval(X,A,LH), eval(X,B,RH), LH=<RH.
 bool_eval(X,A>B):- eval(X,A,LH), eval(X,B,RH), LH>RH.
 bool_eval(X,(A>=B)):- eval(X,A,LH), eval(X,B,RH), LH>=RH.
+bool_eval(X,A==B):- eval(X,A,LH), eval(X,B,RH), LH==RH.
 
 eval(X,id(I),CV):- member([I,CV],X).
 eval(X,A+B,CV):- eval(X,A,AV), eval(X,B,BV), CV is AV+BV.
