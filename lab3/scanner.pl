@@ -5,29 +5,46 @@ run(In, String, Out) :-
 	parse(Tokens, AbstStx),
 	execute(In, AbstStx, Out).
 
-% parse(Tokens, Abstract):- .
+parse([H|Tail],Abstract):- parse(Tail,XS), command(H,Res), append(Res,XS,Abstract).
 
-% Lecture notes lab3
-parse([H|Tail],Abstract):- parse(Tail,XS), expression(H,Res), append(Res,XS,Abstract).
+%expr_bool:=<id><<id> | <id>=<id>.
+%<id>::= id(X), X is an atom.
+%<num>::= Val(X), X is a number.
 
-expression().
+%expression--> [skip].
+%expression--> [while],boolExp,expression.
+%expression--> [set],id(I),num(N).
+%expression--> [seq],expression,expression.
+%expression--> [num].
 
-<b-exp>::=<id><<id> | <id>=<id>.
-<id>::= id(X), X is an atom.
-<num>::= Val(X), X is a number.
 
-exp--> [Skip].
-exp-->[id],b-exp,exp.
-exp-->id,[C],id.
-exp-->id,[=],id.
+expression-->[id],boolExp,expression.
+expression-->id,[commando],id.
+expression-->id,[=],id.
+
+
+command--> [skip].
+command--> [while],"(", if, ",", command, ",", command, ")".
+command--> [seq], "(", command, ",", command, ")".
+command--> [set], "(", id(I), ":=", expression, ")".
+
+do(cmd1,cmd2)--> "(",cmd1,",", cmd2, ")".
 id-->[id(X)],{atom(X)}.
-num-->[Val(N)],{number(N)}.
+num-->[num(N)],{number(N)}.
 
+if-->expression,boolExp,expression.
 
+boolExp--> [=].
+boolExp--> [<].
+boolExp--> [>].
+boolExp--> [=<].
+boolExp--> [>=].
+
+	
 	
 /* Execise 2.3 */
 
-id(I).
+id(I):- atomic(I),\+(number(I)).
 num(N):- number(N).
 
 execute(X,skip,X).
