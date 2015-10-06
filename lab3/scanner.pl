@@ -5,7 +5,23 @@ run(In, String, Out) :-
 	parse(Tokens, AbstStx),
 	execute(In, AbstStx, Out).
 
-parse([H|Tail],Abstract):- parse(Tail,XS), command(H,Res), append(Res,XS,Abstract).
+%parse([H|Tail],Abstract):- parse(Tail,XS), command(H,Res), append(Res,XS,Abstract).
+
+
+/*Detta tror jag bara kräver en mindre justering innan det funkar :)
+---------------------------------------------------------------------
+pgm --> cmd | cmd,pgm.
+cmd --> [skip] | id,[:=],expr | [if],bool,[then],pgm,[else],pgm,[fi] | [while],bool,[do],pgm,[od] | expr.
+bool --> expr,[=<],expr | expr,[>=],expr | expr,[<],expr | expr,[>],expr | expr,[=],expr.
+expr --> factor,[*],expr | factor.
+factor --> term,[+],factor | term.
+term--> id | num.
+num --> [1]|[2]|[3]|[4]|[5]|[6]|[7]|[8]|[9].
+id --> [a]|[b]|[c]|[d]|[e]|[f]|[g]|[h]|[i]|[j]|[k]|[l]|[m]|[n]|[o]|[p]|[q]|[r]|[s]|[t]|[u]|[v]|[x]|[y]|[z].
+
+parse(Tokens,AbstStx):- pgm(Tokens,AbstStx).
+----------------------------------------------------------------------*/
+
 
 %expr_bool:=<id><<id> | <id>=<id>.
 %<id>::= id(X), X is an atom.
