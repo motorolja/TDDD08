@@ -19,6 +19,34 @@ term--> id | num.
 num --> [1]|[2]|[3]|[4]|[5]|[6]|[7]|[8]|[9].
 id --> [a]|[b]|[c]|[d]|[e]|[f]|[g]|[h]|[i]|[j]|[k]|[l]|[m]|[n]|[o]|[p]|[q]|[r]|[s]|[t]|[u]|[v]|[x]|[y]|[z].
 
+%Updaterad version
+expr([X,*|T])--> factor(X),[*],factor(T).
+expr(X)--> factor(X).
+
+factor([X,+|T])--> term(X),[+],factor(T).
+factor([X])--> term(X).
+
+term(X)--> number(X)|identifier(X).
+
+number(1)--> [1].
+number(2)--> [2].
+number(3)--> [3].
+number(4)--> [4].
+number(5)--> [5].
+number(6)--> [6].
+number(7)--> [7].
+number(8)--> [8].
+number(9)--> [9].
+number(0)--> [0].
+
+identifier(a)--> [a].
+identifier(b)--> [b].
+identifier(c)--> [c].
+identifier(d)--> [d].
+identifier(e)--> [e].
+identifier(f)--> [f].
+
+
 parse(Tokens,AbstStx):- pgm(Tokens,AbstStx).
 ----------------------------------------------------------------------*/
 
