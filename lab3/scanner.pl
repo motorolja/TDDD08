@@ -5,7 +5,6 @@ run(In, String, Out) :-
 	parse(Tokens, AbstStx).%,
 	%execute(In, AbstStx, Out).
 
-
 %---------------------------------------------------------------------
 parse(Tokens,AbstStx):- pgm(AbstStx,Tokens, []).
 
