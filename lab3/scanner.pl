@@ -2,44 +2,53 @@
 
 run(In, String, Out) :-
 	scan(String, Tokens),
-	parse(Tokens, AbstStx),
-	execute(In, AbstStx, Out).
-
-parse([H|Tail],Abstract):- parse(Tail,XS), command(H,Res), append(Res,XS,Abstract).
-
-%expr_bool:=<id><<id> | <id>=<id>.
-%<id>::= id(X), X is an atom.
-%<num>::= Val(X), X is a number.
-
-%expression--> [skip].
-%expression--> [while],boolExp,expression.
-%expression--> [set],id(I),num(N).
-%expression--> [seq],expression,expression.
-%expression--> [num].
+	parse(Tokens, AbstStx).%,
+	%execute(In, AbstStx, Out).
 
 
-expression-->[id],boolExp,expression.
-expression-->id,[commando],id.
-expression-->id,[=],id.
+%---------------------------------------------------------------------
+parse(Tokens,AbstStx):- pgm(AbstStx,Tokens, []).
 
+%Uppdaterad version
+pgm(N)--> cmd(N).
+pgm(seq(X,Y))-->  cmd(X),[;],pgm(Y).
 
-command--> [skip].
-command--> [while],"(", if, ",", command, ",", command, ")".
-command--> [seq], "(", command, ",", command, ")".
-command--> [set], "(", id(I), ":=", expression, ")".
+cmd(skip)--> [skip].
+cmd(if(Bool,Pgm1,Pgm2))--> [if],bool(Bool),[then], pgm(Pgm1),[else], pgm(Pgm2),[fi].
+cmd(set(X,Expr))--> identifier(X),[:=], expr(Expr).
+cmd(while(Bool,Pgm))--> [while],bool(Bool),[do],pgm(Pgm),[od].
 
-do(cmd1,cmd2)--> "(",cmd1,",", cmd2, ")".
-id-->[id(X)],{atom(X)}.
-num-->[num(N)],{number(N)}.
+cmd(X)--> bool(X).
 
-if-->expression,boolExp,expression.
+bool(V >= H)--> expr(V),[>=],expr(H).
+bool(V > H)--> expr(V),[>],expr(H).
+bool(V =< H)--> expr(V),[=<],expr(H).
+bool(V < H)--> expr(V),[<],expr(H).
+bool(V = H)--> expr(V),[=],expr(H).
+bool(X)-->expr(X).
 
-boolExp--> [=].
-boolExp--> [<].
-boolExp--> [>].
-boolExp--> [=<].
-boolExp--> [>=].
+expr(V * H)--> factor(V),[*],expr(H).
+expr(X)--> factor(X).
 
+factor(V + H)--> term(V),[+],factor(H).
+factor(V - H)--> term(V),[-],factor(H).
+factor(X)--> term(X).
+
+term(X)--> numb(X)|identifier(X).
+
+numb(num(X))--> [num(X)],{number(X)}.
+identifier(id(X))--> [id(X)],{atom(X)}.
+
+%parse(Tokens,AbstStx):- pgm(Tokens,AbstStx).
+%----------------------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 	
 /* Execise 2.3 */
