@@ -122,10 +122,22 @@ getchilds([[CLeft, MLeft, CRight, MRight]|ChildList], NewChilds):-
 
 checkgoal([CLeftG, MLeftG, CRightG, MRightG], ChildList):- member([CLeftG, MLeftG, CRightG, MRightG], ChildList).
 
-bfgoal(0,0,3,3).
+bfsearch([[Leaf,Branch]|Branches], Leaf).
+bfsearch([[Leaf,Branch]|Branches], Goal):-
+	children(Leaf,Adjacent),
+	expand([Leaf|Branch],Adjacent,Expanded),
+	append(Branches,Expanded,NewBranches),
+	bfsearch(NewBranches,Goal).
 
-:-use_module(library(queues)).
+bfsearch([[Leaf,Branch]|Branches], Goal):-
+	\+ children(Leaf,Leaves),
+	bfsearch(Branches,Goal).
 
-bfs([3,3,0,0], Path):- empty_queue(Q1), queue_head([S], Q1, Q2), bfs1(Q2, Path).
+expand(X,[],[]).
+expand(X,[Y|Z],[[Y|X]|W]):-
+	expand(X,Z,W).
 
-bfs1(Q,[AA,AB,BB,A,B]
+
+
+
+
