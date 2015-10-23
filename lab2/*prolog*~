@@ -1,0 +1,192 @@
+SICStus 4.3.0 (x86_64-linux-glibc2.12): Thu May  8 05:34:25 PDT 2014
+Licensed to SP4.3ida.liu.se
+| ?- % consulting /home/henph669/Documents/TDDD08/lab2/lab2.pl...
+* [X,Y] - singleton variables
+* Approximate lines: 38-39, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [X,Y] - singleton variables
+* Approximate lines: 39-40, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [B,C,X,Y] - singleton variables
+* Approximate lines: 40-41, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [I] - singleton variables
+* Approximate lines: 43-44, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [N] - singleton variables
+* Approximate lines: 44-45, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+% consulted /home/henph669/Documents/TDDD08/lab2/lab2.pl in module user, 20 msec 129936 bytes
+yes
+| ?- eval(2+7,Out).
+Out = 9 ? ;
+Out = 2+7 ? ;
+no
+| ?- eval((2*7)+(7*7),Out).
+Out = 63 ? ;
+Out = 63 ? ;
+Out = 63 ? ;
+Out = 63 ? .
+Top-level options:
+   RET y     no more choices
+     ; n     more choices
+       b     break
+       <     reset printdepth
+       < <n> set printdepth
+       ^     reset subterm
+       ^ <n> set subterm
+     ? h     print this information
+ ? b
+% Break level 1
+% 1
+| ?- 
+| ?- % consulting /home/henph669/Documents/TDDD08/lab2/lab2.pl...
+* [X,Y] - singleton variables
+* Approximate lines: 36-37, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [X,Y] - singleton variables
+* Approximate lines: 37-38, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [B,C,X,Y] - singleton variables
+* Approximate lines: 38-39, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [Y] - singleton variables
+* Approximate lines: 39-40, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [I] - singleton variables
+* Approximate lines: 41-42, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [N] - singleton variables
+* Approximate lines: 42-43, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+% consulted /home/henph669/Documents/TDDD08/lab2/lab2.pl in module user, 0 msec 1136 bytes
+yes
+% 1
+| ?- execute([[A,2],[B,7]],set(id(A),2+1,Out).
+! Syntax error
+! , or ) expected in arguments
+! in line 63
+! execute ( [ [ A , 2 ] , [ B , 7 ] ] , set ( id ( A ) , 2 + 1 , Out ) 
+! <<here>>
+! . 
+| ?- execute([[A,2],[B,7]],set(id(A),2+1),Out).
+no
+% 1
+| ?- execute([[A,2],[B,7]],set(id(A),2+1),Out).
+no
+% 1
+| ?- % consulting /home/henph669/Documents/TDDD08/lab2/lab2.pl...
+* [X,Y] - singleton variables
+* Approximate lines: 36-37, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [X,Y] - singleton variables
+* Approximate lines: 37-38, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [B,C,X,Y] - singleton variables
+* Approximate lines: 38-39, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [I] - singleton variables
+* Approximate lines: 41-42, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [N] - singleton variables
+* Approximate lines: 42-43, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+% consulted /home/henph669/Documents/TDDD08/lab2/lab2.pl in module user, 10 msec 1008 bytes
+yes
+% 1
+| ?- execute([[A,2],[B,7]],set(id(A),2+1),Out).
+no
+% 1
+| ?- execute([[A,2],[B,7]],set(id(A),2),Out).
+! Type error in argument 2 of (is)/2
+! expected evaluable, but found '.'/2
+! goal:  _23121 is[[_23129,2],[_23141,7]]
+% 1
+| ?- execute([[A,2],[B,7]],set(id(A),2),Out)).
+! Syntax error
+! operator expected after expression
+! in line 99
+! execute ( [ [ A , 2 ] , [ B , 7 ] ] , set ( id ( A ) , 2 ) , Out ) 
+! <<here>>
+! ) . 
+| ?- execute([[a,2],[b,7]],set(id(a),2),Out).
+! Type error in argument 2 of (is)/2
+! expected evaluable, but found '.'/2
+! goal:  _23121 is[[a,2],[b,7]]
+% 1
+| ?- execute([[a,2],[b,7]],set(id(a),3),Out).
+no
+% 1
+| ?- % consulting /home/henph669/Documents/TDDD08/lab2/lab2.pl...
+* [X,Y] - singleton variables
+* Approximate lines: 36-37, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [X,Y] - singleton variables
+* Approximate lines: 37-38, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [B,C,X,Y] - singleton variables
+* Approximate lines: 38-39, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [I] - singleton variables
+* Approximate lines: 41-42, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [N] - singleton variables
+* Approximate lines: 42-43, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+% consulted /home/henph669/Documents/TDDD08/lab2/lab2.pl in module user, 10 msec 960 bytes
+yes
+% 1
+| ?- execute([[a,2],[b,7]],set(id(a),3),Out).
+no
+% 1
+| ?- % consulting /home/henph669/Documents/TDDD08/lab2/lab2.pl...
+* [X,Y] - singleton variables
+* Approximate lines: 36-37, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [X,Y] - singleton variables
+* Approximate lines: 37-38, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [B,C,X,Y] - singleton variables
+* Approximate lines: 38-39, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [I] - singleton variables
+* Approximate lines: 41-42, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [N] - singleton variables
+* Approximate lines: 42-43, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+% consulted /home/henph669/Documents/TDDD08/lab2/lab2.pl in module user, 0 msec 960 bytes
+yes
+% 1
+| ?- execute([[a,2],[b,7]],set(id(a),3),Out).
+no
+% 1
+| ?- % consulting /home/henph669/Documents/TDDD08/lab2/lab2.pl...
+* [X,Y] - singleton variables
+* Approximate lines: 36-37, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [X,Y] - singleton variables
+* Approximate lines: 37-38, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [B,C,X,Y] - singleton variables
+* Approximate lines: 38-39, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [I] - singleton variables
+* Approximate lines: 41-42, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [N] - singleton variables
+* Approximate lines: 42-43, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+% consulted /home/henph669/Documents/TDDD08/lab2/lab2.pl in module user, 0 msec 1008 bytes
+yes
+% 1
+| ?- execute([[a,2],[b,7]],set(id(a),3),Out).
+no
+% 1
+| ?- % consulting /home/henph669/Documents/TDDD08/lab2/lab2.pl...
+* [X,Y] - singleton variables
+* Approximate lines: 36-37, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [X,Y] - singleton variables
+* Approximate lines: 37-38, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [B,C,X,Y] - singleton variables
+* Approximate lines: 38-39, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [Old,Sum] - singleton variables
+* Approximate lines: 39-40, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [I] - singleton variables
+* Approximate lines: 41-42, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [N] - singleton variables
+* Approximate lines: 42-43, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+% consulted /home/henph669/Documents/TDDD08/lab2/lab2.pl in module user, 0 msec 912 bytes
+yes
+% 1
+| ?- execute([[a,2],[b,7]],set(id(a),3),Out).
+! Type error in argument 2 of (is)/2
+! expected evaluable, but found '.'/2
+! goal:  _23121 is[[a,2],[b,7]]
+% 1
+| ?- % consulting /home/henph669/Documents/TDDD08/lab2/lab2.pl...
+* [X,Y] - singleton variables
+* Approximate lines: 36-37, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [X,Y] - singleton variables
+* Approximate lines: 37-38, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [B,C,X,Y] - singleton variables
+* Approximate lines: 38-39, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [Old,Sum] - singleton variables
+* Approximate lines: 39-40, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [I] - singleton variables
+* Approximate lines: 41-42, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+* [N] - singleton variables
+* Approximate lines: 42-43, file: '/home/henph669/Documents/TDDD08/lab2/lab2.pl'
+% consulted /home/henph669/Documents/TDDD08/lab2/lab2.pl in module user, 10 msec 992 bytes
+yes
+% 1
+| ?- 
