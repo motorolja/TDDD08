@@ -9,9 +9,19 @@ on(a,d).
 on(b,c).
 on(c,d).
 
+
 compatible(ContainerA,ContainerB) :-
 	\+ on(ContainerA,ContainerB).
 
+shortest_path([LH,RH|Tail],Out):-
+	compatible(LH,RH),
 
-schedule() :-
-
+schedule(List, Resources):-
+	List = [A,B,C,D,E],
+	Tasks = [task(A,1,_,2,0),
+		 task(B,3,_,2,0),
+		task(C,4,_,2,0),
+		task(D,5,_,2,0),
+		task(E,6,_,2,0)],
+	cumulative(Tasks, [limit(6)]),
+	label('Starting').
