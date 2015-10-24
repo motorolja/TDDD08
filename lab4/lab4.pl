@@ -97,13 +97,8 @@ rundepth(CR,MR,CL,ML):- CTot is CL+CR,
     depthsearch([CR,MR,leftside,CL,ML],[0,0,rightside,CTot,MTot],[[CR,MR,leftside,CL,ML]],_).
 
 %-----------------------------------
-
-breadthfirst([CLeft, MLeft, CRight, MRight], [CLeftG, MleftG, CRightG, MRightG], Solution):-
-	findall([CLeft2, MLeft2, CRight2, MRight2],
-		boat([CLeft, MLeft, Start, CRight, MRight], [CLeft2, MLeft2, Goal, CRight2, MRight2]),ChildList),
-	/*(checkgoal([CLeftG, MleftG, CRightG, MRightG], ChildList, Out) -> Solution = Out;*/
-	breadthfirst1([ChildList], [CLeftG, MleftG, CRightG, MRightG], Solution1),
-	   append(Solution1, [[CLeft, MLeft, CRight, MRight]], Solution).
+breadthfirst(ChildList, [CLeftG, MleftG, CRightG, MRightG], Solution):-
+	breadthfirst1([[ChildList]], [CLeftG, MleftG, CRightG, MRightG], Solution).
 
 breadthfirst1(ChildList, [CLeftG, MleftG, CRightG, MRightG], Solution):-
     getchilds(ChildList, NewChilds),
@@ -115,14 +110,14 @@ breadthfirst1([],[],[]).
 getchilds([],[]).
 getchilds([[[CLeft, MLeft, CRight, MRight]|T]|ChildList], NewChilds):-
     findall([CLeft2, MLeft2, CRight2, MRight2],
-        boat([CLeft, MLeft, Start, CRight, MRight], [CLeft2, MLeft2, Goal, CRight2, MRight2]), ChildList0),
-    merger(ChildList0, [CLeft, MLeft, CRight, MRight|T], ChildList1),
+	    boat([CLeft, MLeft, Start, CRight, MRight], [CLeft2, MLeft2, Goal, CRight2, MRight2]), ChildList0),
     getchilds(ChildList, ChildList2),
+    merger(ChildList0, [[CLeft, MLeft, CRight, MRight]|T] , ChildList1),
     append(ChildList1,ChildList2, NewChilds).
 
-merger([],_Parent,[]). % slår ihop parent med childs
+merger([],Parent,[]). % slår ihop parent med childs
 merger([Child|ChildList], Parent, ReadyList):- merger(ChildList, Parent, ReadyList2),
-	append([Child],[Parent], ReadyList1),
+	append([Child],Parent, ReadyList1),
 	append([ReadyList1], ReadyList2, ReadyList).
 
 checkgoal([],[],[]).
