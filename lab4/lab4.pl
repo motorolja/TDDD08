@@ -99,45 +99,32 @@ rundepth(CR,MR,CL,ML):- CTot is CL+CR,
 %-----------------------------------
 
 breadthfirst([CLeft, MLeft, CRight, MRight], [CLeftG, MleftG, CRightG, MRightG], Solution):-
-    findall([CLeft2, MLeft2, CRight2, MRight2],
-        boat([CLeft, MLeft, Start, CRight, MRight], [CLeft2, MLeft2, Goal, CRight2, MRight2]),
-        ChildList),
-    (checkgoal([CLeftG, MleftG, CRightG, MRightG], ChildList) -> Solution = [CLeftG, MleftG, CRightG, MRightG];
-    breadthfirst1(ChildList, [CLeftG, MleftG, CRightG, MRightG], Solution)).
-
+	findall([CLeft2, MLeft2, CRight2, MRight2],
+		boat([CLeft, MLeft, Start, CRight, MRight], [CLeft2, MLeft2, Goal, CRight2, MRight2]),ChildList),
+	/*(checkgoal([CLeftG, MleftG, CRightG, MRightG], ChildList, Out) -> Solution = Out;*/
+	breadthfirst1([ChildList], [CLeftG, MleftG, CRightG, MRightG], Solution1),
+	   append(Solution1, [[CLeft, MLeft, CRight, MRight]], Solution).
 
 breadthfirst1(ChildList, [CLeftG, MleftG, CRightG, MRightG], Solution):-
     getchilds(ChildList, NewChilds),
-        (checkgoal([CLeftG, MleftG, CRightG, MRightG], NewChilds) -> Solution = [CLeftG, MleftG, CRightG, MRightG];
+        (checkgoal([CLeftG, MleftG, CRightG, MRightG], NewChilds,Out) -> Solution = Out;
         breadthfirst1(NewChilds, [CLeftG, MleftG, CRightG, MRightG], Solution)).
 
+breadthfirst1([],[],[]).
 
 getchilds([],[]).
-getchilds([[CLeft, MLeft, CRight, MRight]|ChildList], NewChilds):-
+getchilds([[[CLeft, MLeft, CRight, MRight]|T]|ChildList], NewChilds):-
     findall([CLeft2, MLeft2, CRight2, MRight2],
-        boat([CLeft, MLeft, Start, CRight, MRight], [CLeft2, MLeft2, Goal, CRight2, MRight2]),
-        ChildList1),
+        boat([CLeft, MLeft, Start, CRight, MRight], [CLeft2, MLeft2, Goal, CRight2, MRight2]), ChildList0),
+    merger(ChildList0, [CLeft, MLeft, CRight, MRight|T], ChildList1),
     getchilds(ChildList, ChildList2),
     append(ChildList1,ChildList2, NewChilds).
 
-checkgoal([CLeftG, MLeftG, CRightG, MRightG], ChildList):- member([CLeftG, MLeftG, CRightG, MRightG], ChildList).
+merger([],_Parent,[]). % slår ihop parent med childs
+merger([Child|ChildList], Parent, ReadyList):- merger(ChildList, Parent, ReadyList2),
+	append([Child],[Parent], ReadyList1),
+	append([ReadyList1], ReadyList2, ReadyList).
 
-bfsearch([[Leaf,Branch]|Branches], Leaf).
-bfsearch([[Leaf,Branch]|Branches], Goal):-
-	children(Leaf,Adjacent),
-	expand([Leaf|Branch],Adjacent,Expanded),
-	append(Branches,Expanded,NewBranches),
-	bfsearch(NewBranches,Goal).
-
-bfsearch([[Leaf,Branch]|Branches], Goal):-
-	\+ children(Leaf,Leaves),
-	bfsearch(Branches,Goal).
-
-expand(X,[],[]).
-expand(X,[Y|Z],[[Y|X]|W]):-
-	expand(X,Z,W).
-
-
-
-
-
+checkgoal([],[],[]).
+checkgoal([CLeftG, MLeftG, CRightG, MRightG], [[[CLeftG, MLeftG, CRightG, MRightG]|T]|Tail],[[CLeftG, MLeftG, CRightG, MRightG]|T]).
+checkgoal([CLeftG, MLeftG, CRightG, MRightG], [[[CLeft, MLeft, CRight, MRight]|T]|Tail], Out) :- checkgoal([CLeftG, MLeftG, CRightG, MRightG], Tail, Out).
