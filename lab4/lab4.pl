@@ -102,8 +102,11 @@ breadthfirst(ChildList, [CLeftG, MleftG, CRightG, MRightG], Solution):-
 
 breadthfirst1(ChildList, [CLeftG, MleftG, CRightG, MRightG], Solution):-
     getchilds(ChildList, NewChilds),
-        (checkgoal([CLeftG, MleftG, CRightG, MRightG], NewChilds,Out) -> Solution = Out;
-        breadthfirst1(NewChilds, [CLeftG, MleftG, CRightG, MRightG], Solution)).
+    checkgoal([CLeftG, MleftG, CRightG, MRightG], NewChilds,Solution).
+
+breadthfirst1(ChildList, [CLeftG, MleftG, CRightG, MRightG], Solution):-
+    getchilds(ChildList, NewChilds),
+    breadthfirst1(NewChilds, [CLeftG, MleftG, CRightG, MRightG], Solution).
 
 breadthfirst1([],[],[]).
 
